@@ -6,6 +6,9 @@ from typing import Dict, List
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     ListFlowable,
     ListItem,
@@ -17,6 +20,47 @@ from reportlab.platypus import (
 from .references import extract_link_info
 
 logger = logging.getLogger(__name__)
+
+
+def _register_pdf_font() -> str:
+    """Register an embedded CJK font when one is available on the host."""
+    font_name = "PDFCJK"
+    if font_name in pdfmetrics.getRegisteredFontNames():
+        return font_name
+
+    configured_path = os.getenv("PDF_FONT_PATH", "").strip()
+    candidates = [
+        configured_path,
+        "C:/Windows/Fonts/NotoSansSC-VF.ttf",
+        "C:/Windows/Fonts/msyh.ttc",
+        "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+    ]
+    for font_path in candidates:
+        if font_path and os.path.isfile(font_path):
+            try:
+                pdfmetrics.registerFont(TTFont(font_name, font_path))
+                pdfmetrics.registerFontFamily(
+                    font_name,
+                    normal=font_name,
+                    bold=font_name,
+                    italic=font_name,
+                    boldItalic=font_name,
+                )
+                return font_name
+            except Exception:
+                logger.warning("Could not register PDF font: %s", font_path)
+
+    fallback = "STSong-Light"
+    if fallback not in pdfmetrics.getRegisteredFontNames():
+        pdfmetrics.registerFont(UnicodeCIDFont(fallback))
+        pdfmetrics.registerFontFamily(
+            fallback,
+            normal=fallback,
+            bold=fallback,
+            italic=fallback,
+            boldItalic=fallback,
+        )
+    return fallback
 
 
 def clean_text(text: str) -> str:
@@ -57,6 +101,8 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             bottomMargin=40,
         )
 
+        chinese_font = _register_pdf_font()
+
         # Setup styles
         styles = getSampleStyleSheet()
 
@@ -65,6 +111,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             "Title",
             parent=styles["Heading1"],
             fontSize=20,
+            fontName=chinese_font,
             textColor=colors.black,
             spaceAfter=12,
         )
@@ -76,13 +123,14 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             textColor=colors.black,
             spaceBefore=12,
             spaceAfter=6,
-            fontName="Helvetica-Bold",
+            fontName=chinese_font,
         )
 
         heading3_style = ParagraphStyle(
             "Heading3",
             parent=styles["Heading3"],
             fontSize=12,
+            fontName=chinese_font,
             textColor=colors.black,
             spaceBefore=10,
             spaceAfter=4,
@@ -92,6 +140,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             "Normal",
             parent=styles["Normal"],
             fontSize=10,
+            fontName=chinese_font,
             textColor=colors.black,
             spaceBefore=2,
             spaceAfter=2,
@@ -101,6 +150,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
             "ListItem",
             parent=styles["Normal"],
             fontSize=10,
+            fontName=chinese_font,
             textColor=colors.black,
             spaceBefore=2,
             spaceAfter=2,
@@ -135,7 +185,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
                             ],
                             bulletType="bullet",
                             leftIndent=10,
-                            bulletFontName="Helvetica",
+                            bulletFontName=chinese_font,
                             bulletFontSize=10,
                             bulletOffsetY=0,
                             bulletDedent=10,
@@ -223,7 +273,7 @@ def generate_pdf_from_md(markdown_content: str, output_pdf) -> None:
                     [ListItem(Paragraph(item, list_item_style)) for item in list_items],
                     bulletType="bullet",
                     leftIndent=10,
-                    bulletFontName="Helvetica",
+                    bulletFontName=chinese_font,
                     bulletFontSize=10,
                     bulletOffsetY=0,
                     bulletDedent=10,

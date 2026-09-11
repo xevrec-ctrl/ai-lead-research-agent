@@ -5,6 +5,7 @@ import os
 import uuid
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 
 import uvicorn
 from dotenv import load_dotenv
@@ -383,10 +384,16 @@ async def generate_pdf(data: PDFGenerationRequest):
         )
         if success:
             pdf_buffer, filename = result
+            encoded_filename = quote(filename, safe="")
             return StreamingResponse(
                 pdf_buffer,
                 media_type="application/pdf",
-                headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+                headers={
+                    "Content-Disposition": (
+                        'attachment; filename="research_report.pdf"; '
+                        f"filename*=UTF-8''{encoded_filename}"
+                    )
+                },
             )
         else:
             raise HTTPException(status_code=500, detail=result)

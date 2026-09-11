@@ -443,7 +443,8 @@ function App() {
   // Add new function to handle PDF generation
   const handleGeneratePdf = async () => {
     if (!output || isGeneratingPdf) return;
-    
+
+    setError(null);
     setIsGeneratingPdf(true);
     try {
       const response = await fetch(`${API_URL}/generate-pdf`, {
@@ -453,16 +454,26 @@ function App() {
         },
         body: JSON.stringify({
           report_content: output.details.report,
-          company_name: originalCompanyName || output.details.report
+          company_name: originalCompanyName || undefined
         }),
       });
       
       if (!response.ok) {
-        throw new Error('Failed to generate PDF');
+        let detail = `HTTP ${response.status}`;
+        try {
+          const payload = await response.json();
+          detail = payload.detail || detail;
+        } catch {
+          // Keep the HTTP status when the server did not return JSON.
+        }
+        throw new Error(`PDF 下载失败：${detail}`);
       }
       
       // Get the blob from the response
       const blob = await response.blob();
+      if (!blob.size) {
+        throw new Error('PDF 下载失败：服务器返回了空文件');
+      }
       
       // Create a URL for the blob
       const url = window.URL.createObjectURL(blob);
@@ -478,7 +489,7 @@ function App() {
       document.body.removeChild(link);
       
       // Clean up the URL
-      window.URL.revokeObjectURL(url);
+      window.setTimeout(() => window.URL.revokeObjectURL(url), 1000);
       
     } catch (error) {
       console.error('Error generating PDF:', error);
