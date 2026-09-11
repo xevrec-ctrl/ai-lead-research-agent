@@ -6,9 +6,10 @@ import {
   ResearchForm,
   ResearchQueries,
   CurationExtraction,
-  ResearchBriefings
+  ResearchBriefings,
+  OpportunityPanel
 } from './components';
-import type { ResearchOutput, ResearchStatusType } from './types';
+import type { OpportunityAssessment, ResearchOutput, ResearchStatusType } from './types';
 import { glassStyle, fadeInAnimation } from './styles';
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -46,6 +47,8 @@ function App() {
   const [isBriefingExpanded, setIsBriefingExpanded] = useState(true);
   const [hasScrolledToStatus, setHasScrolledToStatus] = useState(false);
   const [isReportStreaming, setIsReportStreaming] = useState(false);
+  const [assessment, setAssessment] = useState<OpportunityAssessment | null>(null);
+  const [leadId, setLeadId] = useState<string | null>(null);
 
   // Add new state for color cycling
   const [loaderColor, setLoaderColor] = useState("#468BFF");
@@ -107,6 +110,8 @@ function App() {
       setIsBriefingExpanded(true);
       setHasScrolledToStatus(false);
       setIsReportStreaming(false);
+      setAssessment(null);
+      setLeadId(null);
       setIsResetting(false);
     }, 300);
   };
@@ -132,6 +137,8 @@ function App() {
             'curator': 'Enriching',
             'enricher': 'Enriching',
             'briefing': 'Briefing',
+            'opportunity_analyst': '机会分析',
+            'quality_gate': '证据审核',
             'editor': 'Finalizing'
           };
           return stepMap[nodeName] || nodeName;
@@ -321,6 +328,8 @@ function App() {
             summary: "",
             details: { report: data.report },
           });
+          if (data.assessment) setAssessment(data.assessment as OpportunityAssessment);
+          if (data.lead_id) setLeadId(data.lead_id);
           setStatus({ step: "Complete", message: "Research completed successfully" });
           setIsComplete(true);
           setIsResearching(false);
@@ -358,6 +367,8 @@ function App() {
     companyUrl: string;
     companyHq: string;
     companyIndustry: string;
+    clientNeed: string;
+    ourCapabilities: string;
   }) => {
 
     // Clear any existing errors first
@@ -397,6 +408,8 @@ function App() {
         company_url: formattedCompanyUrl,
         industry: formData.companyIndustry || undefined,
         hq_location: formData.companyHq || undefined,
+        client_need: formData.clientNeed || undefined,
+        our_capabilities: formData.ourCapabilities || undefined,
       };
 
       const response = await fetch(url, {
@@ -544,6 +557,15 @@ function App() {
             isCopied={isCopied}
             onCopyToClipboard={handleCopyToClipboard}
             onGeneratePdf={handleGeneratePdf}
+          />
+        )}
+
+        {assessment && (
+          <OpportunityPanel
+            assessment={assessment}
+            leadId={leadId}
+            apiUrl={API_URL}
+            glassStyle={glassStyle.card}
           />
         )}
 

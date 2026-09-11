@@ -10,6 +10,49 @@ export type ResearchOutput = {
   };
 };
 
+export type Evidence = {
+  claim: string;
+  source_urls: string[];
+  confidence: number;
+};
+
+export type OpportunityAssessment = {
+  executive_summary: string;
+  pain_points: Array<{
+    title: string;
+    description: string;
+    priority: string;
+    evidence: Evidence[];
+  }>;
+  score: {
+    need_fit: number;
+    business_value: number;
+    urgency: number;
+    delivery_feasibility: number;
+    evidence_quality: number;
+    total: number;
+  };
+  recommended_solutions: Array<{
+    name: string;
+    target_problem: string;
+    workflow: string[];
+    tools_and_data: string[];
+    expected_value: string;
+    human_approval_points: string[];
+    risks: string[];
+    source_urls: string[];
+  }>;
+  discovery_questions: string[];
+  limitations: string[];
+};
+
+export type TaskDraft = {
+  id: number;
+  title: string;
+  details: Record<string, unknown>;
+  status: string;
+};
+
 export type EnrichmentCounts = {
   company: { total: number; enriched: number };
   industry: { total: number; enriched: number };
@@ -57,4 +100,4 @@ export type ResearchQueriesProps = {
   onToggleExpand: () => void;
   isResetting: boolean;
   glassStyle: string;
-}; 
+};

@@ -1,6 +1,7 @@
 # Environment and secrets
 .env
 reports/*
+data/*.db
 
 # Python
 __pycache__/

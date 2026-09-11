@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Building2, Factory, Globe, Loader2, Search } from 'lucide-react';
+import { Building2, Factory, Globe, Loader2, Search, Target, Wrench } from 'lucide-react';
 import LocationInput from './LocationInput';
 import ExamplePopup from './ExamplePopup';
 import type { ExampleCompany } from './ExamplePopup';
@@ -9,6 +9,8 @@ interface FormData {
   companyUrl: string;
   companyHq: string;
   companyIndustry: string;
+  clientNeed: string;
+  ourCapabilities: string;
 }
 
 interface ResearchFormProps {
@@ -32,6 +34,8 @@ const ResearchForm = ({
     companyUrl: "",
     companyHq: "",
     companyIndustry: "",
+    clientNeed: "",
+    ourCapabilities: "知识库问答、工作流 Agent、飞书文档与任务集成",
   });
   
   // Animation states
@@ -64,6 +68,8 @@ const ResearchForm = ({
           companyUrl: "",
           companyHq: "",
           companyIndustry: "",
+          clientNeed: "",
+          ourCapabilities: "知识库问答、工作流 Agent、飞书文档与任务集成",
         });
         
         // Show the example suggestion again
@@ -104,7 +110,9 @@ const ResearchForm = ({
         companyName: example.name,
         companyUrl: example.url,
         companyHq: example.hq,
-        companyIndustry: example.industry
+        companyIndustry: example.industry,
+        clientNeed: "",
+        ourCapabilities: "知识库问答、工作流 Agent、飞书文档与任务集成"
       };
       
       // Update form data
@@ -139,7 +147,7 @@ const ResearchForm = ({
                 htmlFor="companyName"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                Company Name <span className="text-gray-900/70">*</span>
+                企业名称 <span className="text-gray-900/70">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -156,7 +164,7 @@ const ResearchForm = ({
                     }))
                   }
                   className={`${glassStyle.input} transition-all duration-300 focus:border-[#468BFF]/50 focus:ring-1 focus:ring-[#468BFF]/50 group-hover:border-[#468BFF]/30 bg-white/80 backdrop-blur-sm text-lg py-4 pl-12 font-['DM_Sans']`}
-                  placeholder="Enter company name"
+                  placeholder="输入需要调研的企业名称"
                 />
               </div>
             </div>
@@ -167,7 +175,7 @@ const ResearchForm = ({
                 htmlFor="companyUrl"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                Company URL
+                企业官网
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -194,7 +202,7 @@ const ResearchForm = ({
                 htmlFor="companyHq"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                Company HQ
+                企业所在地
               </label>
               <LocationInput
                 value={formData.companyHq}
@@ -214,7 +222,7 @@ const ResearchForm = ({
                 htmlFor="companyIndustry"
                 className="block text-base font-medium text-gray-700 mb-2.5 transition-all duration-200 group-hover:text-gray-900 font-['DM_Sans']"
               >
-                Company Industry
+                所属行业
               </label>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-50/0 via-gray-100/50 to-gray-50/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg"></div>
@@ -230,7 +238,43 @@ const ResearchForm = ({
                     }))
                   }
                   className={`${glassStyle.input} transition-all duration-300 focus:border-[#468BFF]/50 focus:ring-1 focus:ring-[#468BFF]/50 group-hover:border-[#468BFF]/30 bg-white/80 backdrop-blur-sm text-lg py-4 pl-12 font-['DM_Sans']`}
-                  placeholder="e.g. Technology, Healthcare"
+                  placeholder="例如：企业服务、电子商务"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6">
+            <div className="relative group">
+              <label htmlFor="clientNeed" className="block text-base font-medium text-gray-700 mb-2.5">
+                客户已表达的需求
+              </label>
+              <div className="relative">
+                <Target className="absolute left-4 top-4 h-5 w-5 stroke-[#468BFF]" strokeWidth={1.5} />
+                <textarea
+                  id="clientNeed"
+                  rows={3}
+                  value={formData.clientNeed}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, clientNeed: e.target.value }))}
+                  className={`${glassStyle.input} resize-y py-4 pl-12`}
+                  placeholder="填写沟通中已经确认的需求；没有就留空，系统会标记为待验证假设"
+                />
+              </div>
+            </div>
+
+            <div className="relative group">
+              <label htmlFor="ourCapabilities" className="block text-base font-medium text-gray-700 mb-2.5">
+                我方可交付能力
+              </label>
+              <div className="relative">
+                <Wrench className="absolute left-4 top-4 h-5 w-5 stroke-[#468BFF]" strokeWidth={1.5} />
+                <textarea
+                  id="ourCapabilities"
+                  rows={3}
+                  value={formData.ourCapabilities}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, ourCapabilities: e.target.value }))}
+                  className={`${glassStyle.input} resize-y py-4 pl-12`}
+                  placeholder="只填写确实能够交付或准备学习实现的能力"
                 />
               </div>
             </div>
@@ -246,12 +290,12 @@ const ResearchForm = ({
               {isResearching ? (
                 <>
                   <Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5 loader-icon" style={{ stroke: loaderColor }} />
-                  <span className="text-base font-medium text-gray-900/90">Researching...</span>
+                  <span className="text-base font-medium text-gray-900/90">正在调研...</span>
                 </>
               ) : (
                 <>
                   <Search className="-ml-1 mr-2 h-5 w-5 text-gray-900/90" />
-                  <span className="text-base font-medium text-gray-900/90">Start Research</span>
+                  <span className="text-base font-medium text-gray-900/90">开始客户调研</span>
                 </>
               )}
             </div>
@@ -262,4 +306,4 @@ const ResearchForm = ({
   );
 };
 
-export default ResearchForm; 
+export default ResearchForm;

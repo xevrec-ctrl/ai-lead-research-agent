@@ -90,8 +90,8 @@ const ResearchReport = ({
               ),
               h1: ({node, children, ...props}) => {
                 const text = String(children);
-                const isFirstH1 = text.includes("Research Report");
-                const isReferences = text.includes("References");
+                const isFirstH1 = text.includes("客户机会研究报告");
+                const isReferences = text.includes("参考来源");
                 return (
                   <div>
                     <h1 
@@ -190,4 +190,4 @@ const ResearchReport = ({
   );
 };
 
-export default ResearchReport; 
+export default ResearchReport;

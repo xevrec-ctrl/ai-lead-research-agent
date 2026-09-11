@@ -1,0 +1,30 @@
+{"company":"示例零售01","industry":"连锁零售","client_need":"减少门店重复咨询","our_capabilities":"知识库问答 Agent、飞书任务流"}
+{"company":"示例制造02","industry":"装备制造","client_need":"整理售后工单和设备手册","our_capabilities":"文档解析 Agent、检索增强生成"}
+{"company":"示例教育03","industry":"职业教育","client_need":"自动分流课程咨询","our_capabilities":"客服 Agent、知识库问答"}
+{"company":"示例物流04","industry":"物流运输","client_need":"跟踪异常运单并通知负责人","our_capabilities":"工作流 Agent、飞书消息"}
+{"company":"示例医药05","industry":"医药流通","client_need":"按权限检索内部制度","our_capabilities":"权限感知知识库 Agent"}
+{"company":"示例餐饮06","industry":"餐饮连锁","client_need":"汇总门店日报和异常","our_capabilities":"数据分析 Agent、表格自动化"}
+{"company":"示例软件07","industry":"SaaS","client_need":"减少实施顾问重复答疑","our_capabilities":"产品知识库 Agent、工单路由"}
+{"company":"示例地产08","industry":"房地产服务","client_need":"统一整理项目资料","our_capabilities":"文档检索 Agent、审批流"}
+{"company":"示例农业09","industry":"农业科技","client_need":"汇总客户反馈和农技问题","our_capabilities":"反馈分析 Agent、知识库问答"}
+{"company":"示例文旅10","industry":"文旅服务","client_need":"自动回答景区运营问题","our_capabilities":"运营知识库 Agent、飞书协同"}
+{"company":"示例金融11","industry":"金融服务","client_need":"辅助整理合规资料","our_capabilities":"检索 Agent、人工复核流程"}
+{"company":"示例家居12","industry":"家居零售","client_need":"根据商品资料回答销售问题","our_capabilities":"商品知识库 Agent、销售助手"}
+{"company":"示例能源13","industry":"新能源","client_need":"汇总巡检记录和待办","our_capabilities":"文档抽取 Agent、任务生成"}
+{"company":"示例汽车14","industry":"汽车服务","client_need":"标准化售后问答","our_capabilities":"售后知识库 Agent、工单联动"}
+{"company":"示例服装15","industry":"服装制造","client_need":"搜索生产规范和历史问题","our_capabilities":"企业知识库 Agent、引用追溯"}
+{"company":"示例建筑16","industry":"建筑工程","client_need":"按项目整理资料","our_capabilities":"项目文档 Agent、权限控制"}
+{"company":"示例传媒17","industry":"传媒内容","client_need":"从素材库查找历史案例","our_capabilities":"多模态检索 Agent、标签抽取"}
+{"company":"示例通信18","industry":"通信服务","client_need":"辅助一线定位常见故障","our_capabilities":"故障知识库 Agent、升级人工"}
+{"company":"示例人力19","industry":"人力资源","client_need":"回答员工制度问题","our_capabilities":"HR 知识库 Agent、权限审批"}
+{"company":"示例法务20","industry":"法律服务","client_need":"按案件查找相关资料","our_capabilities":"案件检索 Agent、引用校验"}
+{"company":"示例化工21","industry":"化工制造","client_need":"整理安全操作规程","our_capabilities":"安全知识库 Agent、人工确认"}
+{"company":"示例电商22","industry":"电子商务","client_need":"分析售前咨询主题","our_capabilities":"会话分类 Agent、报表生成"}
+{"company":"示例医疗23","industry":"医疗服务","client_need":"查询院内流程文件","our_capabilities":"制度知识库 Agent、审计记录"}
+{"company":"示例物业24","industry":"物业服务","client_need":"分派报修和投诉","our_capabilities":"工单 Agent、飞书任务流"}
+{"company":"示例旅游25","industry":"旅游服务","client_need":"整理供应商沟通记录","our_capabilities":"信息抽取 Agent、CRM 草稿"}
+{"company":"示例农业26","industry":"农产品","client_need":"汇总渠道销售反馈","our_capabilities":"反馈分析 Agent、表格自动化"}
+{"company":"示例硬件27","industry":"智能硬件","client_need":"辅助售后工程师查资料","our_capabilities":"产品文档 Agent、引用来源"}
+{"company":"示例咨询28","industry":"管理咨询","client_need":"快速形成客户研究简报","our_capabilities":"研究 Agent、证据质量审核"}
+{"company":"示例园区29","industry":"产业园区","client_need":"整理企业服务申请","our_capabilities":"材料抽取 Agent、审批任务"}
+{"company":"示例跨境30","industry":"跨境电商","client_need":"总结多语言客户反馈","our_capabilities":"多语言分析 Agent、人工复核"}

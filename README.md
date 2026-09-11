@@ -1,3 +1,9 @@
+# AI Lead Research and Decision Agent
+
+> This repository is a documented secondary development of the upstream company research agent. The current scope, DashScope setup, local runbook, evaluation contract, and modification boundary are documented in [README.CN.md](README.CN.md).
+
+The project turns public company research into a reviewable lead workflow: evidence collection, opportunity scoring, Agent solution design, quality gating, SQLite persistence, and human-approved follow-up task drafts. It does not claim ownership of the upstream code or fabricate external-system synchronization.
+
  [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/guy-hartstein/company-research-agent/blob/main/README.md)
 [![zh](https://img.shields.io/badge/lang-zh-green.svg)](https://github.com/guy-hartstein/company-research-agent/blob/main/README.zh.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/guy-hartstein/company-research-agent/blob/main/README.fr.md)
